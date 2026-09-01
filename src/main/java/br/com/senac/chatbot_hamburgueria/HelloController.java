@@ -10,8 +10,8 @@ public class HelloController {
 
     private final ChatClient chatClient;
 
-    public HelloController(ChatClient.Builder builder) {
-        this.chatClient = builder.build();
+    public HelloController(ChatClient chatClient) {
+        this.chatClient = chatClient;
     }
 
     record ChatHelloInput(
