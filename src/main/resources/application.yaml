@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: chatbot-hamburgueria
+  ai:
+    model:
+      chat: google-genai
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY}
+        chat:
+          model: gemini-3.6-flash #Vasco da Gama
+          temperature: 0.2
+          max-output-tokens: 2048
+          thinking-budget: 100
