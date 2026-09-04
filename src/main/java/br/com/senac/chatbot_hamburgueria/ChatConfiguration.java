@@ -12,10 +12,12 @@ public class ChatConfiguration {
     @Bean
     ChatClient chatClient(
             ChatClient.Builder builder,
-            @Value("classpath:/prompts/system-prompt-hamburgueria.st") Resource systemPrompt
+            @Value("classpath:/prompts/system-prompt-hamburgueria.st") Resource systemPrompt,
+            CardapioTools cardapioTools
             ) {
         return  builder
                 .defaultSystem(systemPrompt)
+                .defaultTools(cardapioTools)
                 .build();
     }
 }
