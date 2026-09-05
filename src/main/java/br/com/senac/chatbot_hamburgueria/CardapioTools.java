@@ -7,6 +7,9 @@ import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Component
@@ -40,5 +43,23 @@ public class CardapioTools {
                 .map(i -> "%s: R$ %s".formatted(i.nome(), i.preco()))
                 .orElse("Item não encontrado no cardápio. NÃO invente o preço: "
                         + "informe ao cliente que esse item não existe e ofereça o cardápio.");
+    }
+
+    @Tool(description = """
+            Informa se a hamburgueria está aberta neste exato momento e qual é o horário de funcionamento
+            """)
+    public String verificaSeEstaAberto() {
+        log.info("[TOOL] verificaSeEstaAberto");
+        LocalDateTime agora = LocalDateTime.now();
+        boolean diaValido = agora.getDayOfWeek() != DayOfWeek.MONDAY;
+        boolean horaValida = !agora.toLocalTime().isBefore(LocalTime.of(18, 0))
+                && !agora.toLocalTime().isAfter(LocalTime.of(23, 30));
+
+        if (diaValido && horaValida) {
+            return "ABERTO agora. Funcionamos até 23:30";
+        } else {
+            return "FECHADO. Funcionamos de terça a domingo, das 18h até às 23:30";
+        }
+
     }
 }
